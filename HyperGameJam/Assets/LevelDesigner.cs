@@ -9,7 +9,7 @@ public class LevelDesigner : MonoBehaviour
     public int pieCount;
     public GameObject pref;
 
-    private const int pieSlicesPerPie = 8;
+    private const int pieSlicesPerPie = 14;
     const float degreePerSlice = 360 / pieSlicesPerPie;
 
     private const float gap = -5f;
@@ -81,7 +81,7 @@ public class LevelDesigner : MonoBehaviour
                         break;
                 }
 
-                slice.Create(pos, rot, parent, sliceType, prefs[(int) sliceType]);
+                slice = slice.Create(pos, rot, parent,slice.GetType(),prefs[(int) sliceType]);
 
                 level[pieId].Add(slice);
             }
