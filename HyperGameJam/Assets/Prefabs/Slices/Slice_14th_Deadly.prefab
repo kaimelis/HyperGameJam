@@ -28,6 +28,21 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   sliceType: 0
   obj: {fileID: 9080436765665961325}
+--- !u!114 &6551586965356153368
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2057357132484150826}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f9e2353de518cd146b5d441bc17414b7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxOffset: 1
+  offsetIncrement: 0.1
+  frameTime: 0.3
 --- !u!1 &9080436765665961325
 GameObject:
   m_ObjectHideFlags: 0
@@ -141,6 +156,11 @@ PrefabInstance:
       propertyPath: m_Enabled
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: -1504981713932161579, guid: 11285303ed5cacf48bd1c364e66f2f7b,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: f374e36eda642c346b56fa6c56ac112b, type: 2}
     - target: {fileID: -927199367670048503, guid: 11285303ed5cacf48bd1c364e66f2f7b,
         type: 3}
       propertyPath: m_Name
