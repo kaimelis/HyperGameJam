@@ -10,13 +10,19 @@ public class UIManager : MonoBehaviour
     [SerializeField]
     private Text _highScoreText;
 
+    private ScoreManager _scoreManager;
+
     private void Awake()
     {
-        FindObjectOfType<ScoreManager>()._onScoreUpdated += UpdateScoreUI;
-        FindObjectOfType<ScoreManager>()._onHighScoreUpdated += UpdateHighScoreUI;
+        _scoreManager = FindObjectOfType<ScoreManager>();
+        if(_scoreManager != null)
+            _scoreManager._onScoreUpdated += UpdateScoreUI;
+
+        if (_scoreManager != null)
+            _scoreManager._onHighScoreUpdated += UpdateHighScoreUI;
 
         UpdateScoreUI(0);
-        UpdateHighScoreUI(0);
+        UpdateHighScoreUI(0); ;
     }
 
     private void UpdateScoreUI(int updatedScore)
@@ -31,7 +37,9 @@ public class UIManager : MonoBehaviour
 
     private void OnDisable()
     {
-        FindObjectOfType<ScoreManager>()._onScoreUpdated -= UpdateScoreUI;
-        FindObjectOfType<ScoreManager>()._onHighScoreUpdated -= UpdateHighScoreUI;
+        if (_scoreManager != null)
+            _scoreManager._onScoreUpdated -= UpdateScoreUI;
+        if (_scoreManager != null)
+            _scoreManager._onHighScoreUpdated -= UpdateHighScoreUI;
     }
 }

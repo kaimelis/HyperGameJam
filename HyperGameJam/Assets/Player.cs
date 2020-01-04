@@ -7,7 +7,7 @@ using System;
 public class Player : MonoBehaviour
 {
     private Rigidbody _rigidBody;
-
+    private HelixGoal _helixGoal;
     public event Action _onPlayerDeath;
 
     [SerializeField]
@@ -23,7 +23,9 @@ public class Player : MonoBehaviour
     {
         _rigidBody = GetComponent<Rigidbody>();
 
-        FindObjectOfType<HelixGoal>()._onLevelFinished += Disable;
+        _helixGoal = FindObjectOfType<HelixGoal>();
+        if(_helixGoal != null)
+            _helixGoal._onLevelFinished += Disable;
     }
 
     private void Start()
@@ -53,6 +55,7 @@ public class Player : MonoBehaviour
 
     private void OnDisable()
     {
-        FindObjectOfType<HelixGoal>()._onLevelFinished -= Disable;
+        if (_helixGoal != null)
+            _helixGoal._onLevelFinished -= Disable;
     }
 }

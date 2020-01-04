@@ -12,4 +12,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 49e6849c499f3ad488e21e006ca17d73, type: 3}
   m_Name: InGameUI
   m_EditorClassIdentifier: 
-  highScore: 284314
+  highScore: 6
