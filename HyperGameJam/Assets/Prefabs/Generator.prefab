@@ -49,3 +49,7 @@ MonoBehaviour:
   - {fileID: 9080436765665961325, guid: 5a353f3243a17c94e93c6a92d8d8c8b1, type: 3}
   - {fileID: 9080436765665961325, guid: 53bec0381f8e5c945ad1cb7083b18dcb, type: 3}
   - {fileID: 9080436765665961325, guid: a2c5d47aac02ee148a688080ea87a01c, type: 3}
+  centerPolePref: {fileID: 2648076896089785721, guid: 52c5a60ad902ac04da694bab3ac3c842,
+    type: 3}
+  goalPrefab: {fileID: 8992823236876772820, guid: 3b74aa0f5768ae642bca0acf0d3db1fb,
+    type: 3}
