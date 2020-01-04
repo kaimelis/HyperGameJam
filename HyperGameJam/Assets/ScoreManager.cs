@@ -7,6 +7,8 @@ public class ScoreManager : MonoBehaviour
 {
     private int _score;
     private int _highScore;
+    [SerializeField]
+    public InGameUIScriptable scriptable;
 
     public event Action<int> _onScoreUpdated;
     public event Action<int> _onHighScoreUpdated;
@@ -27,9 +29,10 @@ public class ScoreManager : MonoBehaviour
         _score += amount;
         _onScoreUpdated?.Invoke(_score);
 
-        if (_score > _highScore)
+        if (_score > scriptable.highScore)
         {
             _highScore = _score;
+            scriptable.highScore = _score;
             _onHighScoreUpdated?.Invoke(_highScore);
         }
     }

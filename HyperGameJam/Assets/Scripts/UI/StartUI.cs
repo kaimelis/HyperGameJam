@@ -12,7 +12,7 @@ public class StartUI : MonoBehaviour
     {
         if (startUIScriptable.menuActive && !startUIScriptable.creditsActive)
         {
-            menu.SetActive(true);
+           // menu.SetActive(true);
             credits.SetActive(false);
         }
         else

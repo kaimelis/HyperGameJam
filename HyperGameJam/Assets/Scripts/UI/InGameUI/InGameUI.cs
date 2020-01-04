@@ -15,6 +15,8 @@ public class InGameUI : MonoBehaviour
     void Start()
     {
         LevelStart();
+        FindObjectOfType<ScoreManager>()._onScoreUpdated += SetCurrenScore;
+        FindObjectOfType<ScoreManager>()._onHighScoreUpdated += SetHighScore;
     }
     public void LevelStart()
     {
@@ -32,6 +34,7 @@ public class InGameUI : MonoBehaviour
     }
     public void SetCurrenScore(int currentScore)
     {
+        scriptable.finalScore = currentScore;
         if (currentScore > GetHighScore())
             SetHighScore(currentScore);
         this.currentScore = currentScore;

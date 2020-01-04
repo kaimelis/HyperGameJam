@@ -4,4 +4,5 @@
 public class InGameUIScriptable : ScriptableObject
 {
     public int highScore;
+    public int finalScore;
 }
