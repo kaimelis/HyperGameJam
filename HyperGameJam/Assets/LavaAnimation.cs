@@ -25,7 +25,6 @@ public class LavaAnimation : MonoBehaviour
         {
             timer = 0;
             offset = (offset + offsetIncrement) % maxOffset;
-            Debug.Log("AAA " + offset);
             GetComponent<Renderer>().material.mainTextureOffset = new Vector2(offset, 0.0f);
         }
     }
