@@ -19,6 +19,9 @@ public abstract class Slice : MonoBehaviour
     public static Action<int> _onHelixDestroyed;
 
     [SerializeField]
+    public ParticleSystem particles;
+
+    [SerializeField]
     protected int _scoreGain = 5;
     [SerializeField]
     protected int _health = 2;
@@ -33,6 +36,8 @@ public abstract class Slice : MonoBehaviour
     public void OnCollisionEnter(Collision collision)
     {
         Activate(collision);
+
+        particles?.Play();
     }
 
     public abstract void Activate(Collision collision);
