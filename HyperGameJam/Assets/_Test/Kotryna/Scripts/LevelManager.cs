@@ -17,6 +17,12 @@ public class LevelManager : MonoBehaviour
     //    Display(GetCurrentScene());
     //}
 
+    public void Start()
+    {
+        FindObjectOfType<Player>()._onPlayerDeath += LoadGameOver;
+        FindObjectOfType<HelixGoal>()._onLevelFinished += LoadGameOver;
+    }
+
     public void DisplayLevel(SceneReference scene)
     {
         GUILayout.Label(new GUIContent("Scene name Path: " + scene));
@@ -57,6 +63,7 @@ public class LevelManager : MonoBehaviour
 
     public void LoadGameOver()
     {
+        Debug.Log("Loading Game Over");
         SceneManager.LoadScene(gameOverScene);
     }
 
