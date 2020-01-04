@@ -1,30 +1,33 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using System.Net.NetworkInformation;
 using UnityEngine;
 
 public class LevelDesigner : MonoBehaviour
 {
     public int pieCount;
-    public GameObject pref;
 
     private const int pieSlicesPerPie = 14;
-    const float degreePerSlice = 360 / pieSlicesPerPie;
+    const float degreePerSlice = (float)360 / (float)pieSlicesPerPie;
 
     private const float gap = -5f;
 
     private List<List<Slice>> level;
+    private GameObject goal;
     private GameObject pole;
     private Transform parent;
 
     //svoriai - koks sansas tokiam tie
     private const int rewardTileWeight = 10;
-    private const int stoneTileWeight = 30;
-    private const int deadlyTileWeight = 40;
-    private const int normalTileWeight = 100;
+    private const int stoneTileWeight = 20;
+   // private const int normalTileWeight = 100;
+
+    private const int deadlyTileMinWeight = 30;
+    private const int deadlyTileMaxWeight = 70;
 
     public List<GameObject> prefs;
+    public GameObject centerPolePref;
+    public GameObject goalPrefab; 
     public void Generate()
     {
         if (parent != null)
@@ -34,22 +37,31 @@ public class LevelDesigner : MonoBehaviour
             DestroyImmediate(pole);
 
         parent = new GameObject().transform;
+        parent.gameObject.name = "Level";
+
         level = new List<List<Slice>>();
 
 
-        for (int i = 0; i < pieCount; i++)
+        for (int i = 0; i < pieCount-1; i++)
         {
 
             CreatePie(i);
         }
 
-        CreateMidPole(pieCount);
+        CreateGoal(pieCount-1);
+        CreateMidPole(pieCount, centerPolePref);
     }
 
+    void CreateGoal(int pieId)
+    {
+        Vector3 pos = new Vector3(0, pieId * gap, 0);
+
+        goal = Instantiate(goalPrefab, pos, Quaternion.identity,parent);
+    }
     void CreatePie(int pieId)
     {
         level.Add(new List<Slice>());
-        int emptyPosCount = Random.Range(1, 4);
+        int emptyPosCount = Random.Range(0, 2);
         int emptyCounter = 0;
         List<int> scrambledPos = GetEmptyPos(pieSlicesPerPie);
 
@@ -61,7 +73,7 @@ public class LevelDesigner : MonoBehaviour
                 Quaternion rot = Quaternion.Euler(new Vector3(0, i * degreePerSlice, 0));
 
                 Slice slice;
-                SliceType sliceType = GetSliceType();
+                SliceType sliceType = GetSliceType(pieCount,pieId);
                 switch (sliceType)
                 {
                     case SliceType.NORMAL:
@@ -107,10 +119,14 @@ public class LevelDesigner : MonoBehaviour
 
     }
 
-    SliceType GetSliceType()
+    SliceType GetSliceType(int totalCount, int currentCount)
     {
        int r = Random.Range(0, 101);
-       if (r <= rewardTileWeight)
+
+        float deadlyTileWeight = Mathf.Lerp((float)deadlyTileMinWeight, (float)deadlyTileMaxWeight,
+             (float) currentCount/ (float)totalCount);
+   
+        if (r <= rewardTileWeight)
            return SliceType.STONE;
        else if (r > rewardTileWeight && r <= stoneTileWeight)
            return SliceType.REWARD;
@@ -136,11 +152,14 @@ public class LevelDesigner : MonoBehaviour
         return randomizedList;
     }
 
-    void CreateMidPole(int pieCount )
+    void CreateMidPole(int pieCount,GameObject centerPolePref)
     {
-        pole = GameObject.CreatePrimitive(PrimitiveType.Cylinder);
-        pole.transform.localScale =new Vector3(3, (((pieCount-1) * Mathf.Abs(gap))/2)+2,3);
-        pole.transform.localPosition = new Vector3(0, (pieCount-1) * gap / 2, 0);
+        Vector3 scale = new Vector3(3, (((pieCount - 1) * Mathf.Abs(gap)) / 2) + 2, 3);
+        Vector3 pos = new Vector3(0, (pieCount - 1) * gap / 2, 0);
 
+        pole = Instantiate(centerPolePref, pos,Quaternion.identity);
+        pole.transform.localScale = scale;
+
+        pole.name = "Pole";
     }
 }
