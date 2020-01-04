@@ -8,6 +8,7 @@ public class LevelManager : MonoBehaviour
     public SceneReference currentScene;
     public SceneReference nextScene;
     public SceneReference mainMenuScene;
+    public SceneReference gameOverScene;
 
     //private void OnGUI()
     //{
@@ -52,5 +53,19 @@ public class LevelManager : MonoBehaviour
     public void ReloadCurrentScene()
     {
         SceneManager.LoadScene(currentScene);
+    }
+
+    public void LoadGameOver()
+    {
+        SceneManager.LoadScene(gameOverScene);
+    }
+
+    public void QuitGame()
+    {
+#if UNITY_EDITOR
+        UnityEditor.EditorApplication.isPlaying = false;
+#else
+         Application.Quit();
+#endif
     }
 }

@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -9,15 +10,18 @@ public enum SliceType
     REWARD,
     STONE,
 }
-public class Slice : MonoBehaviour
+public abstract class Slice : MonoBehaviour
 {
     public SliceType sliceType;
     public GameObject obj;
 
-    public void Create(Vector3 pos, Quaternion rot, Transform parent, SliceType sliceType, GameObject pref)
+    public Slice Create(Vector3 pos, Quaternion rot, Transform parent ,System.Type type, GameObject pref)
     {
-        this.sliceType = sliceType;
         obj = Instantiate(pref, pos, rot, parent);
-        obj.AddComponent(typeof(MeshCollider));
+
+        return (Slice)obj.transform.GetChild(0).gameObject.GetComponent(type);
     }
+
+    public abstract void Activate();
+
 }

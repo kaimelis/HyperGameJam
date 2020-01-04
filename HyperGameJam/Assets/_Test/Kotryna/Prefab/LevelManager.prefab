@@ -47,8 +47,11 @@ MonoBehaviour:
     sceneAsset: {fileID: 0}
     scenePath: 
   nextScene:
-    sceneAsset: {fileID: 102900000, guid: eec0f2b57d406e04eb7cc5eed9d03fb7, type: 3}
-    scenePath: Assets/_Test/Kotryna/Scenes/Kotryna_Test_Scene.unity
+    sceneAsset: {fileID: 102900000, guid: 9fc0d4010bbf28b4594072e72b8655ab, type: 3}
+    scenePath: Assets/Scenes/MainScene.unity
   mainMenuScene:
     sceneAsset: {fileID: 102900000, guid: 3acd9a231167e1f43b3c65579d78eb41, type: 3}
-    scenePath: Assets/_Test/Kotryna/Scenes/MainMenu.unity
+    scenePath: Assets/Scenes/MainMenu.unity
+  gameOverScene:
+    sceneAsset: {fileID: 102900000, guid: c1baaf651da25c143b5f43b1f37d00da, type: 3}
+    scenePath: Assets/Scenes/GameOver.unity
