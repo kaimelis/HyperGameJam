@@ -38,7 +38,7 @@ GameObject:
   m_Component:
   - component: {fileID: 338525748585088846}
   m_Layer: 0
-  m_Name: Slice_14th_Earth
+  m_Name: Slice_14th_Earth_Hit_1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -259,7 +259,7 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 2100000, guid: 41652b94c7147b94a9cbd0497ba0f1b7, type: 2}
+      objectReference: {fileID: 2100000, guid: c0e19f06cfc61cb41b822e6915ae0e35, type: 2}
     - target: {fileID: -927199367670048503, guid: 11285303ed5cacf48bd1c364e66f2f7b,
         type: 3}
       propertyPath: m_Name
