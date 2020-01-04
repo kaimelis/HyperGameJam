@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using System.Net.NetworkInformation;
 using UnityEngine;
 
@@ -13,9 +14,17 @@ public class LevelDesigner : MonoBehaviour
 
     private const float gap = -5f;
 
-    private List<List<GameObject>> level;
+    private List<List<Slice>> level;
     private GameObject pole;
     private Transform parent;
+
+    //svoriai - koks sansas tokiam tie
+    private const int rewardTileWeight = 10;
+    private const int stoneTileWeight = 30;
+    private const int deadlyTileWeight = 40;
+    private const int normalTileWeight = 100;
+
+    public List<GameObject> prefs;
     public void Generate()
     {
         if (parent != null)
@@ -25,10 +34,12 @@ public class LevelDesigner : MonoBehaviour
             DestroyImmediate(pole);
 
         parent = new GameObject().transform;
+        level = new List<List<Slice>>();
 
-        level = new List<List<GameObject>>();
+
         for (int i = 0; i < pieCount; i++)
         {
+
             CreatePie(i);
         }
 
@@ -37,14 +48,58 @@ public class LevelDesigner : MonoBehaviour
 
     void CreatePie(int pieId)
     {
-        level.Add(new List<GameObject>());
-        
+        level.Add(new List<Slice>());
+        int emptyPosCount = Random.Range(1, 4);
+        int emptyCounter = 0;
+        List<int> scrambledPos = GetEmptyPos(pieCount);
+
         for (int i = 0; i < pieSlicesPerPie; i++)
         {
-            GameObject slice = Instantiate(pref,new Vector3(0,pieId * gap,0), Quaternion.Euler(new Vector3(0, i * degreePerSlice, 0)));
-            slice.transform.parent = parent;
+            if (i == scrambledPos[emptyCounter] && emptyCounter < emptyPosCount)
+            {
+                emptyCounter++;
+                continue;
+            }
+
+            Vector3 pos = new Vector3(0, pieId * gap, 0);
+            Quaternion rot = Quaternion.Euler(new Vector3(0, i * degreePerSlice, 0));
+            Slice slice = new Slice();
+
+            SliceType sliceType = GetSliceType();
+
+            slice.Create(pos, rot, parent, sliceType, prefs[(int)sliceType]);
+
             level[pieId].Add(slice);
         }
+    }
+
+    SliceType GetSliceType()
+    {
+       int r = Random.Range(0, 101);
+       if (r <= rewardTileWeight)
+           return SliceType.STONE;
+       else if (r > rewardTileWeight && r <= stoneTileWeight)
+           return SliceType.REWARD;
+       else if (r > stoneTileWeight && r <= deadlyTileWeight)
+           return SliceType.DEADLY;
+       else
+           return SliceType.NORMAL;
+    }
+
+    List<int> GetEmptyPos(int pieCount)
+    {
+        List<int> pos = new List<int>();
+        for (int x = 1; x < pieCount; x++)
+        {
+            pos.Add(x);
+        }
+
+        System.Random rnd = new System.Random();
+        var randomizedList = (from item in pos
+            orderby rnd.Next()
+            select item).ToList<int>();
+
+        return randomizedList;
     }
 
     void CreateMidPole(int pieCount )

@@ -2,17 +2,22 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+public enum SliceType
+{
+    DEADLY,
+    NORMAL,
+    REWARD,
+    STONE,
+}
 public class Slice : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    public SliceType sliceType;
+    public GameObject obj;
 
-    // Update is called once per frame
-    void Update()
+    public void Create(Vector3 pos, Quaternion rot, Transform parent, SliceType sliceType, GameObject pref)
     {
-        
+        this.sliceType = sliceType;
+        obj = Instantiate(pref, pos, rot, parent);
+        obj.AddComponent(typeof(MeshCollider));
     }
 }
