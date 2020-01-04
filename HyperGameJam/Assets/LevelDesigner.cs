@@ -19,12 +19,13 @@ public class LevelDesigner : MonoBehaviour
     //svoriai - koks sansas tokiam tie
     private const int rewardTileWeight = 10;
     private const int stoneTileWeight = 20;
-    private const int normalTileWeight = 100;
+   // private const int normalTileWeight = 100;
 
     private const int deadlyTileMinWeight = 30;
     private const int deadlyTileMaxWeight = 70;
 
     public List<GameObject> prefs;
+    public GameObject centerPolePref;
 
     public void Generate()
     {
@@ -46,7 +47,7 @@ public class LevelDesigner : MonoBehaviour
             CreatePie(i);
         }
 
-        CreateMidPole(pieCount);
+        CreateMidPole(pieCount, centerPolePref);
     }
 
     void CreatePie(int pieId)
@@ -143,11 +144,14 @@ public class LevelDesigner : MonoBehaviour
         return randomizedList;
     }
 
-    void CreateMidPole(int pieCount )
+    void CreateMidPole(int pieCount,GameObject centerPolePref)
     {
-        pole = GameObject.CreatePrimitive(PrimitiveType.Cylinder);
-        pole.transform.localScale =new Vector3(3, (((pieCount-1) * Mathf.Abs(gap))/2)+2,3);
-        pole.transform.localPosition = new Vector3(0, (pieCount-1) * gap / 2, 0);
+        Vector3 scale = new Vector3(3, (((pieCount - 1) * Mathf.Abs(gap)) / 2) + 2, 3);
+        Vector3 pos = new Vector3(0, (pieCount - 1) * gap / 2, 0);
 
+        pole = Instantiate(centerPolePref, pos,Quaternion.identity);
+        pole.transform.localScale = scale;
+
+        pole.name = "Pole";
     }
 }
