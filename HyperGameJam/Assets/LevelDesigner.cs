@@ -13,6 +13,7 @@ public class LevelDesigner : MonoBehaviour
     private const float gap = -5f;
 
     private List<List<Slice>> level;
+    private GameObject goal;
     private GameObject pole;
     private Transform parent;
 
@@ -26,7 +27,7 @@ public class LevelDesigner : MonoBehaviour
 
     public List<GameObject> prefs;
     public GameObject centerPolePref;
-
+    public GameObject goalPrefab; 
     public void Generate()
     {
         if (parent != null)
@@ -41,15 +42,22 @@ public class LevelDesigner : MonoBehaviour
         level = new List<List<Slice>>();
 
 
-        for (int i = 0; i < pieCount; i++)
+        for (int i = 0; i < pieCount-1; i++)
         {
 
             CreatePie(i);
         }
 
+        CreateGoal(pieCount-1);
         CreateMidPole(pieCount, centerPolePref);
     }
 
+    void CreateGoal(int pieId)
+    {
+        Vector3 pos = new Vector3(0, pieId * gap, 0);
+
+        goal = Instantiate(goalPrefab, pos, Quaternion.identity,parent);
+    }
     void CreatePie(int pieId)
     {
         level.Add(new List<Slice>());
