@@ -18,11 +18,14 @@ public class LevelDesigner : MonoBehaviour
 
     //svoriai - koks sansas tokiam tie
     private const int rewardTileWeight = 10;
-    private const int stoneTileWeight = 30;
-    private const int deadlyTileWeight = 40;
+    private const int stoneTileWeight = 20;
     private const int normalTileWeight = 100;
 
+    private const int deadlyTileMinWeight = 30;
+    private const int deadlyTileMaxWeight = 70;
+
     public List<GameObject> prefs;
+
     public void Generate()
     {
         if (parent != null)
@@ -49,7 +52,7 @@ public class LevelDesigner : MonoBehaviour
     void CreatePie(int pieId)
     {
         level.Add(new List<Slice>());
-        int emptyPosCount = Random.Range(1, 4);
+        int emptyPosCount = Random.Range(0, 2);
         int emptyCounter = 0;
         List<int> scrambledPos = GetEmptyPos(pieSlicesPerPie);
 
@@ -61,7 +64,7 @@ public class LevelDesigner : MonoBehaviour
                 Quaternion rot = Quaternion.Euler(new Vector3(0, i * degreePerSlice, 0));
 
                 Slice slice;
-                SliceType sliceType = GetSliceType();
+                SliceType sliceType = GetSliceType(pieCount,pieId);
                 switch (sliceType)
                 {
                     case SliceType.NORMAL:
@@ -107,10 +110,14 @@ public class LevelDesigner : MonoBehaviour
 
     }
 
-    SliceType GetSliceType()
+    SliceType GetSliceType(int totalCount, int currentCount)
     {
        int r = Random.Range(0, 101);
-       if (r <= rewardTileWeight)
+
+        float deadlyTileWeight = Mathf.Lerp((float)deadlyTileMinWeight, (float)deadlyTileMaxWeight,
+             (float) currentCount/ (float)totalCount);
+   
+        if (r <= rewardTileWeight)
            return SliceType.STONE;
        else if (r > rewardTileWeight && r <= stoneTileWeight)
            return SliceType.REWARD;
