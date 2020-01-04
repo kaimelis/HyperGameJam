@@ -1,16 +1,14 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using System.Net.NetworkInformation;
 using UnityEngine;
 
 public class LevelDesigner : MonoBehaviour
 {
     public int pieCount;
-    public GameObject pref;
 
     private const int pieSlicesPerPie = 14;
-    const float degreePerSlice = 360 / pieSlicesPerPie;
+    const float degreePerSlice = (float)360 / (float)pieSlicesPerPie;
 
     private const float gap = -5f;
 
@@ -34,6 +32,8 @@ public class LevelDesigner : MonoBehaviour
             DestroyImmediate(pole);
 
         parent = new GameObject().transform;
+        parent.gameObject.name = "Level";
+
         level = new List<List<Slice>>();
 
 
