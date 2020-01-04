@@ -19,8 +19,10 @@ public class LevelManager : MonoBehaviour
 
     public void Start()
     {
-        FindObjectOfType<Player>()._onPlayerDeath += LoadGameOver;
-        FindObjectOfType<HelixGoal>()._onLevelFinished += LoadGameOver;
+        if(!FindObjectOfType<Player>())
+            FindObjectOfType<Player>()._onPlayerDeath += LoadGameOver;
+        if (!FindObjectOfType<HelixGoal>())
+            FindObjectOfType<HelixGoal>()._onLevelFinished += LoadGameOver;
     }
 
     public void DisplayLevel(SceneReference scene)
