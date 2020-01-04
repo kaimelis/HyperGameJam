@@ -9,7 +9,7 @@ public enum SliceType
     REWARD,
     STONE,
 }
-public class Slice : MonoBehaviour
+public abstract class Slice : MonoBehaviour
 {
     public SliceType sliceType;
     public GameObject obj;
@@ -18,6 +18,9 @@ public class Slice : MonoBehaviour
     {
         this.sliceType = sliceType;
         obj = Instantiate(pref, pos, rot, parent);
-        obj.AddComponent(typeof(MeshCollider));
+        obj.transform.GetChild(0).gameObject.AddComponent(typeof(MeshCollider));
     }
+
+    public abstract void Activate();
+
 }

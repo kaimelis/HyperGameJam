@@ -63,9 +63,27 @@ public class LevelDesigner : MonoBehaviour
 
             Vector3 pos = new Vector3(0, pieId * gap, 0);
             Quaternion rot = Quaternion.Euler(new Vector3(0, i * degreePerSlice, 0));
-            Slice slice = new Slice();
 
+            Slice slice;
             SliceType sliceType = GetSliceType();
+            switch (sliceType)
+            {
+                case SliceType.NORMAL:
+                    slice = new SliceNormal();
+                    break;
+                case SliceType.DEADLY:
+                    slice = new SliceDeadly();
+                    break;
+                case SliceType.STONE:
+                    slice = new SliceStone();
+                    break;
+                case SliceType.REWARD:
+                    slice = new SliceReward();
+                    break;
+                default:
+                    slice = new SliceNormal();
+                    break;
+            }
 
             slice.Create(pos, rot, parent, sliceType, prefs[(int)sliceType]);
 
