@@ -62,7 +62,9 @@ public class HelixTower : MonoBehaviour
 
     private void OnDisable()
     {
-        FindObjectOfType<Player>()._onPlayerDeath -= DisableHelix;
-        FindObjectOfType<HelixGoal>()._onLevelFinished -= DisableHelix;
+        if(FindObjectOfType<Player>() != null)
+            FindObjectOfType<Player>()._onPlayerDeath -= DisableHelix;
+        if (FindObjectOfType<HelixGoal>() != null)
+            FindObjectOfType<HelixGoal>()._onLevelFinished -= DisableHelix;
     }
 }
