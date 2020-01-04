@@ -6,9 +6,9 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/_Test/Kotryna/Scenes/Kotryna_Test_Scene.unity
-    guid: eec0f2b57d406e04eb7cc5eed9d03fb7
-  - enabled: 1
-    path: Assets/_Test/Kotryna/Scenes/MainMenu.unity
+    path: Assets/Scenes/MainMenu.unity
     guid: 3acd9a231167e1f43b3c65579d78eb41
+  - enabled: 1
+    path: Assets/Scenes/MainScene.unity
+    guid: 9fc0d4010bbf28b4594072e72b8655ab
   m_configObjects: {}
