@@ -7,9 +7,14 @@ namespace Mantas
 {
     public class LevelManager : MonoBehaviour
     {
+        private Player player;
+
         private void Awake()
         {
-            FindObjectOfType<Player>()._onPlayerDeath += RestartScene;
+            player = FindObjectOfType<Player>();
+
+            if(player != null)
+                player._onPlayerDeath += RestartScene;
         }
 
         private void RestartScene()
@@ -19,7 +24,8 @@ namespace Mantas
 
         private void OnDisable()
         {
-            FindObjectOfType<Player>()._onPlayerDeath -= RestartScene;
+            if (player != null)
+                player._onPlayerDeath -= RestartScene;
         }
     }
 }

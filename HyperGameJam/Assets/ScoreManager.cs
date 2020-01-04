@@ -18,7 +18,7 @@ public class ScoreManager : MonoBehaviour
 
     private void Awake()
     {
-        HelixPartOre._onHelixDestroyed += AddScore;
+        Slice._onHelixDestroyed += AddScore;
         HelixPassed._onHelixPassed += AddScore;
     }
 
@@ -36,7 +36,7 @@ public class ScoreManager : MonoBehaviour
 
     private void OnDisable()
     {
-        HelixPartOre._onHelixDestroyed -= AddScore;
+        Slice._onHelixDestroyed -= AddScore;
         HelixPassed._onHelixPassed -= AddScore;
     }
 }

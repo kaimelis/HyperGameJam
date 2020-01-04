@@ -5,6 +5,8 @@ using UnityEngine;
 public class HelixTower : MonoBehaviour
 {
     private Transform _transform;
+    private Player _player;
+    private HelixGoal _helixGoal;
 
     [SerializeField]
     private KeyCode _right;
@@ -24,8 +26,16 @@ public class HelixTower : MonoBehaviour
     private void Awake()
     {
         _transform = GetComponent<Transform>();
-        FindObjectOfType<Player>()._onPlayerDeath += DisableHelix;
-        FindObjectOfType<HelixGoal>()._onLevelFinished += DisableHelix;
+
+        _player = FindObjectOfType<Player>();
+
+        if(_player != null)
+            _player._onPlayerDeath += DisableHelix;
+
+        _helixGoal = FindObjectOfType<HelixGoal>();
+
+        if(_helixGoal != null)
+            _helixGoal._onLevelFinished += DisableHelix;
     }
 
     private void Update()
@@ -62,7 +72,10 @@ public class HelixTower : MonoBehaviour
 
     private void OnDisable()
     {
-        FindObjectOfType<Player>()._onPlayerDeath -= DisableHelix;
-        FindObjectOfType<HelixGoal>()._onLevelFinished -= DisableHelix;
+        if (_player != null)
+            _player._onPlayerDeath -= DisableHelix;
+
+        if(_helixGoal != null)
+            _helixGoal._onLevelFinished -= DisableHelix;
     }
 }
