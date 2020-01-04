@@ -2,17 +2,13 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SliceNormal : MonoBehaviour
+public class SliceNormal : Slice
 {
-    // Start is called before the first frame update
-    void Start()
+
+    public override void Activate()
     {
-        
+        throw new System.NotImplementedException();
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+   
 }
