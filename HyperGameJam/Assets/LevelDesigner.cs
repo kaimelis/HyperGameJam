@@ -9,7 +9,7 @@ public class LevelDesigner : MonoBehaviour
     public int pieCount;
     public GameObject pref;
 
-    private const int pieSlicesPerPie = 8;
+    private const int pieSlicesPerPie = 14;
     const float degreePerSlice = 360 / pieSlicesPerPie;
 
     private const float gap = -5f;
@@ -51,26 +51,60 @@ public class LevelDesigner : MonoBehaviour
         level.Add(new List<Slice>());
         int emptyPosCount = Random.Range(1, 4);
         int emptyCounter = 0;
-        List<int> scrambledPos = GetEmptyPos(pieCount);
+        List<int> scrambledPos = GetEmptyPos(pieSlicesPerPie);
 
         for (int i = 0; i < pieSlicesPerPie; i++)
         {
-            if (i == scrambledPos[emptyCounter] && emptyCounter < emptyPosCount)
+            if (!CheckIfSkipSlice(ref emptyCounter, emptyPosCount, scrambledPos, i))
             {
-                emptyCounter++;
-                continue;
+                Vector3 pos = new Vector3(0, pieId * gap, 0);
+                Quaternion rot = Quaternion.Euler(new Vector3(0, i * degreePerSlice, 0));
+
+                Slice slice;
+                SliceType sliceType = GetSliceType();
+                switch (sliceType)
+                {
+                    case SliceType.NORMAL:
+                        slice = new SliceNormal();
+                        break;
+                    case SliceType.DEADLY:
+                        slice = new SliceDeadly();
+                        break;
+                    case SliceType.STONE:
+                        slice = new SliceStone();
+                        break;
+                    case SliceType.REWARD:
+                        slice = new SliceReward();
+                        break;
+                    default:
+                        slice = new SliceNormal();
+                        break;
+                }
+
+                slice = slice.Create(pos, rot, parent,slice.GetType(),prefs[(int) sliceType]);
+
+                level[pieId].Add(slice);
             }
-
-            Vector3 pos = new Vector3(0, pieId * gap, 0);
-            Quaternion rot = Quaternion.Euler(new Vector3(0, i * degreePerSlice, 0));
-            Slice slice = new Slice();
-
-            SliceType sliceType = GetSliceType();
-
-            slice.Create(pos, rot, parent, sliceType, prefs[(int)sliceType]);
-
-            level[pieId].Add(slice);
         }
+    }
+
+    bool CheckIfSkipSlice(ref int emptyCounter, int emptyPosCount,List<int> scrambledPos,int posToCheck)
+    {
+
+        if (emptyCounter < emptyPosCount)
+        {
+            for (int j = 0; j < emptyPosCount; j++)
+            {
+                if (posToCheck == scrambledPos[j])
+                {
+                    emptyCounter++;
+                    return true;
+                }
+
+            }
+        }
+        return false;
+
     }
 
     SliceType GetSliceType()
@@ -89,7 +123,7 @@ public class LevelDesigner : MonoBehaviour
     List<int> GetEmptyPos(int pieCount)
     {
         List<int> pos = new List<int>();
-        for (int x = 1; x < pieCount; x++)
+        for (int x = 0; x < pieCount; x++)
         {
             pos.Add(x);
         }
