@@ -20,10 +20,14 @@ public class LevelDesigner : MonoBehaviour
     //svoriai - koks sansas tokiam tie
     private const int rewardTileWeight = 10;
     private const int stoneTileWeight = 20;
-   // private const int normalTileWeight = 100;
+    private const int normalTileWeight = 100;
 
     private const int deadlyTileMinWeight = 30;
     private const int deadlyTileMaxWeight = 70;
+
+    const int minGapCount = 1;
+    const int maxGapCount = 2;
+
 
     public List<GameObject> prefs;
     public GameObject centerPolePref;
@@ -32,9 +36,6 @@ public class LevelDesigner : MonoBehaviour
     {
         if (parent != null)
             DestroyImmediate(parent.gameObject);
-
-        if(pole != null)
-            DestroyImmediate(pole);
 
         parent = new GameObject().transform;
         parent.gameObject.name = "Level";
@@ -61,9 +62,13 @@ public class LevelDesigner : MonoBehaviour
     void CreatePie(int pieId)
     {
         level.Add(new List<Slice>());
-        int emptyPosCount = Random.Range(0, 2);
+        int emptyPosCount = Random.Range(minGapCount, maxGapCount+1);
         int emptyCounter = 0;
         List<int> scrambledPos = GetEmptyPos(pieSlicesPerPie);
+
+        GameObject pie = new GameObject();
+        pie.name = "pie";
+        pie.transform.parent = parent;
 
         for (int i = 0; i < pieSlicesPerPie; i++)
         {
@@ -93,7 +98,7 @@ public class LevelDesigner : MonoBehaviour
                         break;
                 }
 
-                slice = slice.Create(pos, rot, parent,slice.GetType(),prefs[(int) sliceType]);
+                slice = slice.Create(pos, rot, pie.transform, slice.GetType(),prefs[(int) sliceType]);
 
                 level[pieId].Add(slice);
             }
@@ -121,7 +126,7 @@ public class LevelDesigner : MonoBehaviour
 
     SliceType GetSliceType(int totalCount, int currentCount)
     {
-       int r = Random.Range(0, 101);
+       int r = Random.Range(0, normalTileWeight+1);
 
         float deadlyTileWeight = Mathf.Lerp((float)deadlyTileMinWeight, (float)deadlyTileMaxWeight,
              (float) currentCount/ (float)totalCount);
@@ -159,7 +164,7 @@ public class LevelDesigner : MonoBehaviour
 
         pole = Instantiate(centerPolePref, pos,Quaternion.identity);
         pole.transform.localScale = scale;
-
+        pole.transform.parent = parent;
         pole.name = "Pole";
     }
 }
